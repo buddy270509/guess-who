@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Guess Who Said It</title>
-<meta name="description" content="Two games with Tejas: send a signed message and see if he can guess who said it, or check how well two people match.">
+<title>Circle Says</title>
+<meta name="description" content="A just-for-fun game for your circle: drop a message with a nickname, or check how well two people match.">
 <meta name="theme-color" content="#1d1233">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%231d1233'/%3E%3Ctext x='50' y='66' font-size='56' text-anchor='middle'%3E%F0%9F%91%80%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -93,27 +93,27 @@ select:focus{outline:none;border-color:var(--pink);box-shadow:0 0 0 4px #ff6fae4
 <body>
 <main>
   <div class="eyes" aria-hidden="true">👀</div>
-  <h1>Guess Who Said It</h1>
+  <h1>Circle Says</h1>
 
   <div class="tabs" role="tablist" aria-label="Pick a game">
-    <button class="tab" role="tab" id="tGuess" aria-selected="true" aria-controls="tabGuess" type="button">Guess Who 👀</button>
+    <button class="tab" role="tab" id="tGuess" aria-selected="true" aria-controls="tabGuess" type="button">Say It 💬</button>
     <button class="tab" role="tab" id="tLove" aria-selected="false" aria-controls="tabLove" type="button">Love Match 💘</button>
   </div>
 
   <div id="tabGuess" role="tabpanel" aria-labelledby="tGuess">
-  <p class="rules">Send <b>Tejas</b> a message, sign it with your <b>name or Instagram handle</b>, and he'll try to guess who said what. Your name is saved with your message and only he can see it.</p>
+  <p class="rules">Drop a message and sign it with a <b>nickname</b>. The host reads them all, then everyone tries to guess who said what.</p>
 
   <section class="card" id="formCard" aria-label="Send a message">
     <form id="f" novalidate autocomplete="off">
-      <label class="field" for="who">Your name or Instagram handle
-        <input type="text" id="who" maxlength="60" placeholder="e.g. @yourhandle" required>
+      <label class="field" for="who">Your nickname
+        <input type="text" id="who" maxlength="60" placeholder="Pick any nickname" required>
       </label>
       <label class="field" for="msg">Your message
         <small>Say anything fun, funny or sweet. Keep it kind.</small>
         <textarea id="msg" maxlength="800" placeholder="Type what you really think…" required></textarea>
         <div class="count" id="cnt">0 / 800</div>
       </label>
-      <div class="save"><span aria-hidden="true">✍️</span><span>This message will be saved with the name above.</span></div>
+      <div class="save"><span aria-hidden="true">✍️</span><span>Your message is sent with the nickname above.</span></div>
       <input type="text" class="hp" id="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">
       <button class="btn" id="send" type="submit">Send it 🚀</button>
       <p class="status" id="status" role="status" aria-live="polite"></p>
@@ -123,22 +123,22 @@ select:focus{outline:none;border-color:var(--pink);box-shadow:0 0 0 4px #ff6fae4
   <section class="card" id="done" aria-live="polite">
     <div class="eyes" aria-hidden="true">🎉</div>
     <h2>Sent!</h2>
-    <p>Now Tejas has to guess who you are. 👀</p>
+    <p>Now let the guessing begin. 👀</p>
     <button class="btn alt" id="again" type="button">Send another</button>
   </section>
 
   </div>
 
   <div id="tabLove" role="tabpanel" aria-labelledby="tLove" hidden>
-    <p class="rules">Check how well two people match. The percent is worked out on your own phone, <b>just for fun</b>. Nothing is sent to anyone unless you tick the box and tap send at the end.</p>
+    <p class="rules">Check how well two people match. The percent is worked out on your own phone, <b>just for fun</b>. It is only sent if you tick the box and tap send at the end.</p>
 
     <section class="card" aria-label="Love match form">
       <form id="lf" novalidate autocomplete="off">
-        <label class="field" for="yn">Your name
-          <input type="text" id="yn" maxlength="40" placeholder="Your name">
+        <label class="field" for="yn">Your nickname
+          <input type="text" id="yn" maxlength="40" placeholder="Your nickname">
         </label>
-        <label class="field" for="cn">Your crush's name
-          <input type="text" id="cn" maxlength="40" placeholder="Their name">
+        <label class="field" for="cn">Your crush's name or nickname
+          <input type="text" id="cn" maxlength="40" placeholder="Their name or nickname">
         </label>
         <fieldset class="field"><legend>Your birthday <small>Day and month only, no year needed.</small></legend>
           <div class="two"><select id="yd" aria-label="Your birth day"></select><select id="ym" aria-label="Your birth month"></select></div>
@@ -161,14 +161,14 @@ select:focus{outline:none;border-color:var(--pink);box-shadow:0 0 0 4px #ff6fae4
       <p class="signs" id="rsigns"></p>
       <p class="verdict" id="rverdict"></p>
       <div class="feel" id="rfeel" hidden></div>
-      <label class="agree"><input type="checkbox" id="agree"><span>I agree to email these details to Tejas: both names, both birthdays (day and month only) and my message.</span></label>
-      <button class="btn" id="lsend" type="button" disabled>Send this to Tejas 📩</button>
+      <label class="agree"><input type="checkbox" id="agree"><span>I agree to send these details to the game host: both names, both birthdays (day and month only) and my message.</span></label>
+      <button class="btn" id="lsend" type="button" disabled>Send it in 📩</button>
       <p class="status" id="lsendst" role="status" aria-live="polite"></p>
       <button class="btn alt" id="lagain" type="button">Check another pair</button>
     </section>
   </div>
 
-  <p class="foot">A just-for-fun game with friends.</p>
+  <p class="foot">A just-for-fun game for the circle.</p>
 </main>
 
 <script>
@@ -176,7 +176,6 @@ select:focus{outline:none;border-color:var(--pink);box-shadow:0 0 0 4px #ff6fae4
 /* Same Web3Forms key as the birthday card (it only works on buddy270509.github.io).
    To keep these messages separate, make a new key at web3forms.com and paste it here. */
 const WEB3FORMS_KEY = "de5ffe2f-1e79-461d-9373-2a822ec27265";
-const OWNER = "Tejas";
 
 const $ = s => document.querySelector(s);
 const f = $("#f"), who = $("#who"), msg = $("#msg"), st = $("#status"), btn = $("#send");
@@ -187,7 +186,7 @@ msg.addEventListener("input", () => { $("#cnt").textContent = msg.value.length +
 f.addEventListener("submit", async e => {
   e.preventDefault();
   const name = who.value.trim(), text = msg.value.trim();
-  if (!name){ st.textContent = "Please add your name or Instagram handle first."; who.focus(); return; }
+  if (!name){ st.textContent = "Please add a nickname first."; who.focus(); return; }
   if (!text){ st.textContent = "Please write a message first."; msg.focus(); return; }
   if ($("#botcheck").value){ return; }
   if (Date.now() - lastSent < 20000){ st.textContent = "Easy there! Wait a few seconds before sending another."; return; }
@@ -200,7 +199,7 @@ f.addEventListener("submit", async e => {
       headers: { "Content-Type": "application/json", "Accept": "application/json" },
       body: JSON.stringify({
         access_key: WEB3FORMS_KEY,
-        subject: "Guess Who Said It: new message",
+        subject: "Circle Says: new message",
         from_name: name,
         message: "From: " + name + "\n\nMessage:\n" + text
       })
@@ -267,7 +266,7 @@ $("#lf").addEventListener("submit", e => {
   e.preventDefault();
   const yn=$("#yn").value.trim(), cn=$("#cn").value.trim(), st=$("#lstatus");
   const yd=+$("#yd").value, ym=+$("#ym").value, cd=+$("#cd").value, cm=+$("#cm").value;
-  if(!yn||!cn){ st.textContent="Please type both names."; return; }
+  if(!yn||!cn){ st.textContent="Please type both names or nicknames."; return; }
   if(!yd||!ym||!cd||!cm){ st.textContent="Please pick both birthdays (day and month)."; return; }
   if(yd>DAYS_IN[ym-1]||cd>DAYS_IN[cm-1]){ st.textContent="One of those dates doesn't exist. Please check the day and month."; return; }
   st.textContent="";
@@ -296,12 +295,12 @@ $("#lsend").addEventListener("click", async () => {
   let ok=false;
   try{
     const r=await fetch("https://api.web3forms.com/submit",{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},
-      body:JSON.stringify({access_key:WEB3FORMS_KEY,subject:"Love Match: new entry",from_name:d.yn,
+      body:JSON.stringify({access_key:WEB3FORMS_KEY,subject:"Circle Says: Love Match",from_name:d.yn,
         message:`Love Match entry\n\nFrom: ${d.yn} (born ${d.yd} ${MONTHS[d.ym-1]}, ${d.s1})\nCrush: ${d.cn} (born ${d.cd} ${MONTHS[d.cm-1]}, ${d.s2})\nMatch result: ${d.pct}%\n\nWhat they feel:\n${d.feel||"—"}`})});
     const j=await r.json(); ok=!!(j&&j.success);
   }catch(err){}
-  b.textContent="Send this to Tejas 📩";
-  if(ok){ lastLoveSent=Date.now(); st.textContent="Sent to Tejas! 🎉"; b.disabled=true; $("#agree").disabled=true; }
+  b.textContent="Send it in 📩";
+  if(ok){ lastLoveSent=Date.now(); st.textContent="Sent! 🎉"; b.disabled=true; $("#agree").disabled=true; }
   else{ st.textContent="That didn't go through. Please try again in a moment."; b.disabled=!$("#agree").checked; }
 });
 </script>

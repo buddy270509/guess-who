@@ -4,9 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Circle Says</title>
-<meta name="description" content="A just-for-fun game for your circle: drop a message with a nickname, or check how well two people match.">
+<meta name="description" content="Two just-for-fun games for the circle.">
 <meta name="theme-color" content="#1d1233">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%231d1233'/%3E%3Ctext x='50' y='66' font-size='56' text-anchor='middle'%3E%F0%9F%91%80%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
@@ -89,220 +88,22 @@ select:focus{outline:none;border-color:var(--pink);box-shadow:0 0 0 4px #ff6fae4
 
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
+<style>
+.pick{display:block;text-decoration:none;color:var(--ink);text-align:center}
+.pick .big{font-family:var(--display);font-size:1.7rem;line-height:1.1;display:block}
+.pick span{display:block;font-weight:700;color:var(--soft);margin-top:4px}
+.pick:focus-visible{outline:3px solid var(--pop)}
+.pick:nth-of-type(2){transform:rotate(.8deg)}
+</style>
 </head>
 <body>
 <main>
   <div class="eyes" aria-hidden="true">👀</div>
   <h1>Circle Says</h1>
-
-  <div class="tabs" role="tablist" aria-label="Pick a game">
-    <button class="tab" role="tab" id="tGuess" aria-selected="true" aria-controls="tabGuess" type="button">Say It 💬</button>
-    <button class="tab" role="tab" id="tLove" aria-selected="false" aria-controls="tabLove" type="button">Love Match 💘</button>
-  </div>
-
-  <div id="tabGuess" role="tabpanel" aria-labelledby="tGuess">
-  <p class="rules">Drop a message and sign it with a <b>nickname</b>. The host reads them all, then everyone tries to guess who said what.</p>
-
-  <section class="card" id="formCard" aria-label="Send a message">
-    <form id="f" novalidate autocomplete="off">
-      <label class="field" for="who">Your nickname
-        <input type="text" id="who" maxlength="60" placeholder="Pick any nickname" required>
-      </label>
-      <label class="field" for="msg">Your message
-        <small>Say anything fun, funny or sweet. Keep it kind.</small>
-        <textarea id="msg" maxlength="800" placeholder="Type what you really think…" required></textarea>
-        <div class="count" id="cnt">0 / 800</div>
-      </label>
-      <div class="save"><span aria-hidden="true">✍️</span><span>Your message is sent with the nickname above.</span></div>
-      <input type="text" class="hp" id="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">
-      <button class="btn" id="send" type="submit">Send it 🚀</button>
-      <p class="status" id="status" role="status" aria-live="polite"></p>
-    </form>
-  </section>
-
-  <section class="card" id="done" aria-live="polite">
-    <div class="eyes" aria-hidden="true">🎉</div>
-    <h2>Sent!</h2>
-    <p>Now let the guessing begin. 👀</p>
-    <button class="btn alt" id="again" type="button">Send another</button>
-  </section>
-
-  </div>
-
-  <div id="tabLove" role="tabpanel" aria-labelledby="tLove" hidden>
-    <p class="rules">Check how well two people match. The percent is worked out on your own phone, <b>just for fun</b>. It is only sent if you tick the box and tap send at the end.</p>
-
-    <section class="card" aria-label="Love match form">
-      <form id="lf" novalidate autocomplete="off">
-        <label class="field" for="yn">Your nickname
-          <input type="text" id="yn" maxlength="40" placeholder="Your nickname">
-        </label>
-        <label class="field" for="cn">Your crush's name or nickname
-          <input type="text" id="cn" maxlength="40" placeholder="Their name or nickname">
-        </label>
-        <fieldset class="field"><legend>Your birthday <small>Day and month only, no year needed.</small></legend>
-          <div class="two"><select id="yd" aria-label="Your birth day"></select><select id="ym" aria-label="Your birth month"></select></div>
-        </fieldset>
-        <fieldset class="field"><legend>Their birthday <small>Day and month only, no year needed.</small></legend>
-          <div class="two"><select id="cd" aria-label="Their birth day"></select><select id="cm" aria-label="Their birth month"></select></div>
-        </fieldset>
-        <label class="field" for="feel">What do you feel about them? <small>Optional.</small>
-          <textarea id="feel" maxlength="600" placeholder="Say it however you like…"></textarea>
-        </label>
-        <button class="btn" type="submit">Check our match 💘</button>
-        <p class="status" id="lstatus" role="status" aria-live="polite"></p>
-      </form>
-    </section>
-
-    <section class="card" id="res" hidden aria-live="polite" style="text-align:center">
-      <div class="names" id="rnames"></div>
-      <div class="pct"><span id="rpct">0</span>%</div>
-      <div class="meter"><i id="rfill"></i></div>
-      <p class="signs" id="rsigns"></p>
-      <p class="verdict" id="rverdict"></p>
-      <div class="feel" id="rfeel" hidden></div>
-      <label class="agree"><input type="checkbox" id="agree"><span>I agree to send these details to the game host: both names, both birthdays (day and month only) and my message.</span></label>
-      <button class="btn" id="lsend" type="button" disabled>Send it in 📩</button>
-      <p class="status" id="lsendst" role="status" aria-live="polite"></p>
-      <button class="btn alt" id="lagain" type="button">Check another pair</button>
-    </section>
-  </div>
-
-  <p class="foot">A just-for-fun game for the circle.</p>
+  <p class="rules">Two just-for-fun games for the circle. Pick one.</p>
+  <a class="card pick" href="say/"><span class="big">Say It 💬</span><span>Drop a message with a nickname and let everyone guess who said it.</span></a>
+  <a class="card pick" href="love/"><span class="big">Love Match 💘</span><span>Check how well two people match. Just for fun.</span></a>
+  <p class="foot">Made for fun.</p>
 </main>
-
-<script>
-"use strict";
-/* Same Web3Forms key as the birthday card (it only works on buddy270509.github.io).
-   To keep these messages separate, make a new key at web3forms.com and paste it here. */
-const WEB3FORMS_KEY = "de5ffe2f-1e79-461d-9373-2a822ec27265";
-
-const $ = s => document.querySelector(s);
-const f = $("#f"), who = $("#who"), msg = $("#msg"), st = $("#status"), btn = $("#send");
-let lastSent = 0;
-
-msg.addEventListener("input", () => { $("#cnt").textContent = msg.value.length + " / 800"; });
-
-f.addEventListener("submit", async e => {
-  e.preventDefault();
-  const name = who.value.trim(), text = msg.value.trim();
-  if (!name){ st.textContent = "Please add a nickname first."; who.focus(); return; }
-  if (!text){ st.textContent = "Please write a message first."; msg.focus(); return; }
-  if ($("#botcheck").value){ return; }
-  if (Date.now() - lastSent < 20000){ st.textContent = "Easy there! Wait a few seconds before sending another."; return; }
-
-  btn.disabled = true; btn.textContent = "Sending…"; st.textContent = "";
-  let ok = false;
-  try{
-    const r = await fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "Accept": "application/json" },
-      body: JSON.stringify({
-        access_key: WEB3FORMS_KEY,
-        subject: "Circle Says: new message",
-        from_name: name,
-        message: "From: " + name + "\n\nMessage:\n" + text
-      })
-    });
-    const d = await r.json();
-    ok = !!(d && d.success);
-  }catch(err){}
-  btn.disabled = false; btn.textContent = "Send it 🚀";
-
-  if (ok){
-    lastSent = Date.now();
-    msg.value = ""; $("#cnt").textContent = "0 / 800";
-    $("#formCard").style.display = "none";
-    $("#done").classList.add("show");
-  }else{
-    st.textContent = "That didn't go through. Please try again in a moment.";
-  }
-});
-
-$("#again").addEventListener("click", () => {
-  $("#done").classList.remove("show");
-  $("#formCard").style.display = "";
-  msg.focus();
-});
-
-/* ---------- TABS ---------- */
-function showTab(love){
-  $("#tabGuess").hidden = love; $("#tabLove").hidden = !love;
-  $("#tGuess").setAttribute("aria-selected", String(!love)); $("#tLove").setAttribute("aria-selected", String(love));
-}
-$("#tGuess").addEventListener("click", () => showTab(false));
-$("#tLove").addEventListener("click", () => showTab(true));
-
-/* ---------- LOVE MATCH (worked out on the phone, just for fun) ---------- */
-const MONTHS=["January","February","March","April","May","June","July","August","September","October","November","December"];
-const DAYS_IN=[31,29,31,30,31,30,31,31,30,31,30,31];
-const START=[[1,20,"Aquarius"],[2,19,"Pisces"],[3,21,"Aries"],[4,20,"Taurus"],[5,21,"Gemini"],[6,21,"Cancer"],[7,23,"Leo"],[8,23,"Virgo"],[9,23,"Libra"],[10,23,"Scorpio"],[11,22,"Sagittarius"],[12,22,"Capricorn"]];
-const SIGN={Aries:["♈","fire"],Taurus:["♉","earth"],Gemini:["♊","air"],Cancer:["♋","water"],Leo:["♌","fire"],Virgo:["♍","earth"],Libra:["♎","air"],Scorpio:["♏","water"],Sagittarius:["♐","fire"],Capricorn:["♑","earth"],Aquarius:["♒","air"],Pisces:["♓","water"]};
-function signOf(d,m){ let s="Capricorn"; for(const [mm,dd,n] of START){ if(m>mm||(m===mm&&d>=dd)) s=n; } return s; }
-function fillDateSelects(dId,mId){
-  const d=$("#"+dId), m=$("#"+mId);
-  d.innerHTML='<option value="">Day</option>'+Array.from({length:31},(_,i)=>`<option value="${i+1}">${i+1}</option>`).join("");
-  m.innerHTML='<option value="">Month</option>'+MONTHS.map((n,i)=>`<option value="${i+1}">${n}</option>`).join("");
-}
-fillDateSelects("yd","ym"); fillDateSelects("cd","cm");
-function hash(str){ let h=2166136261; for(const c of str){ h^=c.codePointAt(0); h=Math.imul(h,16777619); } return h>>>0; }
-function matchScore(n1,n2,s1,s2){
-  const a=[n1,n2].map(x=>x.trim().toLowerCase().replace(/\s+/g," ")).sort().join("|");
-  let score=40+(hash(a)%41);
-  const e1=SIGN[s1][1], e2=SIGN[s2][1], pair=[e1,e2].sort().join("-");
-  if(s1===s2) score+=5;
-  if(e1===e2) score+=12; else if(pair==="air-fire"||pair==="earth-water") score+=8;
-  return Math.min(99,score);
-}
-function verdictFor(p){
-  if(p>=90) return "Written in the stars ✨";
-  if(p>=78) return "Wow, that's a strong match 🔥";
-  if(p>=65) return "Pretty promising 😉";
-  if(p>=52) return "Could work with a little effort 🙂";
-  return "Opposites sometimes surprise everyone 😄";
-}
-let loveData=null, lastLoveSent=0;
-$("#lf").addEventListener("submit", e => {
-  e.preventDefault();
-  const yn=$("#yn").value.trim(), cn=$("#cn").value.trim(), st=$("#lstatus");
-  const yd=+$("#yd").value, ym=+$("#ym").value, cd=+$("#cd").value, cm=+$("#cm").value;
-  if(!yn||!cn){ st.textContent="Please type both names or nicknames."; return; }
-  if(!yd||!ym||!cd||!cm){ st.textContent="Please pick both birthdays (day and month)."; return; }
-  if(yd>DAYS_IN[ym-1]||cd>DAYS_IN[cm-1]){ st.textContent="One of those dates doesn't exist. Please check the day and month."; return; }
-  st.textContent="";
-  const s1=signOf(yd,ym), s2=signOf(cd,cm), pct=matchScore(yn,cn,s1,s2), feel=$("#feel").value.trim();
-  loveData={yn,cn,yd,ym,cd,cm,s1,s2,pct,feel};
-  $("#rnames").textContent=""; $("#rnames").append(yn, " + ", cn);
-  $("#rsigns").textContent=`${SIGN[s1][0]} ${s1}  ×  ${SIGN[s2][0]} ${s2}`;
-  $("#rverdict").textContent=verdictFor(pct);
-  const fe=$("#rfeel"); fe.hidden=!feel; fe.textContent=feel ? "What you feel: "+feel : "";
-  $("#agree").checked=false; $("#lsend").disabled=true; $("#lsendst").textContent="";
-  $("#lf").parentElement.hidden=true; $("#res").hidden=false;
-  const fill=$("#rfill"), num=$("#rpct"); fill.style.width="0"; num.textContent="0";
-  requestAnimationFrame(()=>requestAnimationFrame(()=>{ fill.style.width=pct+"%"; }));
-  let n=0; const t=setInterval(()=>{ n+=Math.max(1,Math.round(pct/40)); if(n>=pct){ n=pct; clearInterval(t); } num.textContent=n; },30);
-});
-$("#agree").addEventListener("change", e => { $("#lsend").disabled=!e.target.checked; });
-$("#lagain").addEventListener("click", () => {
-  $("#res").hidden=true; $("#lf").parentElement.hidden=false; $("#lf").reset(); loveData=null; window.scrollTo({top:0});
-});
-$("#lsend").addEventListener("click", async () => {
-  const st=$("#lsendst"), b=$("#lsend");
-  if(!loveData||!$("#agree").checked) return;
-  if(Date.now()-lastLoveSent<20000){ st.textContent="Easy there! Wait a few seconds first."; return; }
-  const d=loveData;
-  b.disabled=true; b.textContent="Sending…"; st.textContent="";
-  let ok=false;
-  try{
-    const r=await fetch("https://api.web3forms.com/submit",{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},
-      body:JSON.stringify({access_key:WEB3FORMS_KEY,subject:"Circle Says: Love Match",from_name:d.yn,
-        message:`Love Match entry\n\nFrom: ${d.yn} (born ${d.yd} ${MONTHS[d.ym-1]}, ${d.s1})\nCrush: ${d.cn} (born ${d.cd} ${MONTHS[d.cm-1]}, ${d.s2})\nMatch result: ${d.pct}%\n\nWhat they feel:\n${d.feel||"—"}`})});
-    const j=await r.json(); ok=!!(j&&j.success);
-  }catch(err){}
-  b.textContent="Send it in 📩";
-  if(ok){ lastLoveSent=Date.now(); st.textContent="Sent! 🎉"; b.disabled=true; $("#agree").disabled=true; }
-  else{ st.textContent="That didn't go through. Please try again in a moment."; b.disabled=!$("#agree").checked; }
-});
-</script>
 </body>
 </html>
